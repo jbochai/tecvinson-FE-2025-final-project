@@ -1,0 +1,217 @@
+/* ─── Hero ───────────────────────────────────────────────────────────────── */
+.hero {
+  background: var(--brand-black);
+  color: var(--color-tertiary-50);
+  overflow: hidden;
+  min-height: 88vh;
+  display: flex;
+  align-items: center;
+}
+
+.heroInner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  padding-block: 5rem;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
+}
+
+.heroEyebrow {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--brand-gold);
+  margin-bottom: 1.25rem;
+}
+
+.heroTitle {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--color-tertiary-50);
+  margin-bottom: 1.5rem;
+}
+
+.heroTitle em {
+  font-style: italic;
+  color: var(--brand-gold);
+}
+
+.heroSub {
+  font-size: 1.0625rem;
+  color: var(--color-secondary-300);
+  line-height: 1.7;
+  max-width: 40ch;
+  margin-bottom: 2.25rem;
+}
+
+.heroActions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* ─── Decorative circles ────────────────────────────────────────────────── */
+.heroDecor {
+  position: relative;
+  height: 420px;
+}
+
+.decor1 {
+  position: absolute;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, var(--color-primary-700), transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.decor2 {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-primary-800);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.decor3 {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: var(--brand-gold);
+  opacity: 0.12;
+  top: 15%;
+  right: 10%;
+}
+
+/* ─── Categories strip ──────────────────────────────────────────────────── */
+.categories {
+  padding-block: 1.25rem;
+  background: var(--color-tertiary-200);
+  border-bottom: 1px solid var(--color-tertiary-300);
+}
+
+.catStrip {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.catPill {
+  padding: 0.375rem 1.125rem;
+  background: var(--color-tertiary-50);
+  border: 1px solid var(--color-tertiary-400);
+  border-radius: 50px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--color-secondary-500);
+  transition: all var(--transition-fast);
+}
+
+.catPill:hover {
+  background: var(--brand-black);
+  color: var(--color-tertiary-50);
+  border-color: var(--brand-black);
+}
+
+/* ─── Sections ───────────────────────────────────────────────────────────── */
+.section {
+  padding-block: 4.5rem;
+}
+
+.section:nth-of-type(even) {
+  background: var(--color-tertiary-50);
+}
+
+.sectionHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2.5rem;
+}
+
+.seeAll {
+  font-size: 0.8125rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.blogGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ─── Banner ─────────────────────────────────────────────────────────────── */
+.banner {
+  background: var(--brand-gold);
+  padding-block: 3rem;
+}
+
+.bannerInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.bannerTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 600;
+  color: var(--brand-black);
+  letter-spacing: -0.01em;
+}
+
+.bannerSub {
+  color: var(--color-primary-900);
+  margin-top: 0.25rem;
+  font-size: 1.0625rem;
+}
+
+/* Blog skeleton */
+.blogSkeleton {}
+.blogSkThumb {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+.blogSkLine {
+  border-radius: 2px;
+}
+
+/* ─── Responsive ────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .heroInner {
+    grid-template-columns: 1fr;
+    padding-block: 3.5rem;
+  }
+  .heroDecor { display: none; }
+
+  .sectionHead {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}

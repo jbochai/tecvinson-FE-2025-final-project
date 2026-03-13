@@ -1,0 +1,151 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--nav-height);
+  background: var(--brand-black);
+  border-bottom: 1px solid var(--color-secondary-700);
+  backdrop-filter: blur(8px);
+}
+
+.inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* ─── Brand ─────────────────────────────────────────────────────────────── */
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: 0.2rem;
+  flex-shrink: 0;
+}
+
+.brandText {
+  font-family: var(--font-display);
+  font-size: 1.625rem;
+  font-weight: 600;
+  color: var(--color-tertiary-50);
+  letter-spacing: -0.02em;
+}
+
+.brandDot {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--brand-gold);
+  line-height: 1;
+}
+
+/* ─── Desktop nav ────────────────────────────────────────────────────────── */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-left: auto;
+}
+
+.link {
+  padding: 0.375rem 0.875rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-secondary-300);
+  border-radius: 2px;
+  transition: color var(--transition-fast), background var(--transition-fast);
+}
+
+.link:hover {
+  color: var(--color-tertiary-50);
+}
+
+.active {
+  color: var(--brand-gold) !important;
+}
+
+/* ─── Actions ────────────────────────────────────────────────────────────── */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-left: 1rem;
+}
+
+.cartBtn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--color-secondary-200);
+  border-radius: 50%;
+  transition: color var(--transition-fast), background var(--transition-fast);
+}
+
+.cartBtn:hover {
+  color: var(--color-tertiary-50);
+  background: var(--color-secondary-700);
+}
+
+.badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  min-width: 1.1rem;
+  height: 1.1rem;
+  padding: 0 0.25rem;
+  background: var(--brand-gold);
+  color: var(--brand-black);
+  font-size: 0.6rem;
+  font-weight: 700;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* ─── Hamburger ──────────────────────────────────────────────────────────── */
+.hamburger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--color-secondary-200);
+  border-radius: 2px;
+  transition: color var(--transition-fast);
+}
+
+.hamburger:hover {
+  color: var(--color-tertiary-50);
+}
+
+/* ─── Mobile drawer ──────────────────────────────────────────────────────── */
+.drawer {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1.5rem 1.5rem;
+  background: var(--color-secondary-800);
+  border-bottom: 1px solid var(--color-secondary-700);
+  gap: 0.25rem;
+}
+
+.drawer .link {
+  padding: 0.75rem 1rem;
+  font-size: 0.9375rem;
+  display: block;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .nav {
+    display: none;
+  }
+  .hamburger {
+    display: flex;
+  }
+}

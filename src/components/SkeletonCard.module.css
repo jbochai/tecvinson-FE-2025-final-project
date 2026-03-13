@@ -1,0 +1,55 @@
+.card {
+  background: var(--color-tertiary-50);
+  border: 1px solid var(--color-tertiary-300);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+}
+
+.body {
+  padding: 1rem 1.25rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.tag {
+  height: 0.875rem;
+  width: 5rem;
+  border-radius: 2px;
+}
+
+.title {
+  height: 1rem;
+  width: 85%;
+  border-radius: 2px;
+}
+
+.titleShort {
+  height: 1rem;
+  width: 60%;
+  border-radius: 2px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.4rem;
+}
+
+.price {
+  height: 1.25rem;
+  width: 6rem;
+  border-radius: 2px;
+}
+
+.btn {
+  height: 2rem;
+  width: 5rem;
+  border-radius: 2px;
+}

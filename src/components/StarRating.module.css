@@ -1,0 +1,24 @@
+.wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+}
+
+.star {
+  transition: transform 150ms ease;
+}
+
+.full, .half {
+  color: var(--color-rating-500);
+}
+
+.empty {
+  color: var(--color-neutral-300);
+}
+
+.value {
+  margin-left: 0.35rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-secondary-500);
+}

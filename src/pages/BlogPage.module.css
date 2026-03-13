@@ -1,0 +1,36 @@
+.searchWrap {
+  position: relative;
+  max-width: 480px;
+  margin-bottom: 2.5rem;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 0.875rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-neutral-400);
+  pointer-events: none;
+}
+
+.searchInput {
+  padding-left: 2.75rem !important;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.75rem;
+}
+
+.empty {
+  padding: 4rem 1rem;
+  text-align: center;
+}
+
+.emptyText {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--color-secondary-400);
+  font-style: italic;
+}
