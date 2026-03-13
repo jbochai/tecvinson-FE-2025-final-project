@@ -4,7 +4,7 @@ A React capstone project for Tecvinson Frontend Training, Cohort 2025.
 
 Shoppr Lite is a front-end e-commerce app built with React 18, React Router v6, and the native Fetch API. It lets shoppers browse products, filter and search, view full product details, manage a cart, and read blog posts — all powered by a live REST API.
 
-**Deployed URL:** _Add your Netlify URL here_
+**Deployed URL:** [https://ngshoppr-v2.netlify.app](https://ngshoppr-v2.netlify.app) (Update this after deployment)
 
 ---
 
