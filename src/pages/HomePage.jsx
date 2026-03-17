@@ -62,17 +62,39 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── Categories strip ──────────────────────────────────────────── */}
-      <section className={styles.categories}>
+      {/* ─── Shop by Category ──────────────────────────────────────────── */}
+      <section className={styles.categorySection}>
         <div className="container">
-          <div className={styles.catStrip}>
-            {['Electronics', 'Clothing', 'Furniture', 'Toys', 'Sports', 'Books'].map(cat => (
+          <div className={styles.sectionHeadCategories}>
+            <div>
+              <h2 className="section-heading">Shop by Category</h2>
+              <p className={styles.categorySub}>Find your style.</p>
+              <div className="divider" />
+            </div>
+            <Link to="/shop" className={`btn btn-ghost ${styles.seeAll}`}>
+              All Categories <ArrowRight size={14} />
+            </Link>
+          </div>
+
+          <div className={styles.categoryGrid}>
+            {[
+              { name: 'Electronics', img: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?auto=format&fit=crop&q=80&w=400' },
+              { name: 'Clothing',    img: 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&q=80&w=400' },
+              { name: 'Furniture',   img: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=80&w=400' },
+              { name: 'Toys',        img: 'https://images.unsplash.com/photo-1558060370-d64111d20163?auto=format&fit=crop&q=80&w=400' },
+              { name: 'Sports',      img: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&q=80&w=400' },
+              { name: 'Books',       img: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&q=80&w=400' }
+            ].map(cat => (
               <Link
-                key={cat}
-                to={`/shop?cat=${cat}`}
-                className={styles.catPill}
+                key={cat.name}
+                to={`/shop?cat=${cat.name}`}
+                className={styles.catCard}
               >
-                {cat}
+                <div className={styles.catImgWrap}>
+                  <img src={cat.img} alt={cat.name} className={styles.catImg} loading="lazy" />
+                </div>
+                <div className={styles.catOverlay} />
+                <h3 className={styles.catName}>{cat.name}</h3>
               </Link>
             ))}
           </div>

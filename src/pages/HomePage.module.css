@@ -99,36 +99,82 @@
 }
 
 /* ─── Categories strip ──────────────────────────────────────────────────── */
-.categories {
-  padding-block: 1.25rem;
-  background: var(--color-tertiary-200);
-  border-bottom: 1px solid var(--color-tertiary-300);
-}
-
-.catStrip {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-}
-
-.catPill {
-  padding: 0.375rem 1.125rem;
+/* ─── Shop by Category ────────────────────────────────────────────────────── */
+.categorySection {
+  padding-block: 5rem;
   background: var(--color-tertiary-50);
-  border: 1px solid var(--color-tertiary-400);
-  border-radius: 50px;
-  font-size: 0.8125rem;
-  font-weight: 500;
-  letter-spacing: 0.03em;
-  color: var(--color-secondary-500);
-  transition: all var(--transition-fast);
 }
 
-.catPill:hover {
-  background: var(--brand-black);
+.sectionHeadCategories {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2.5rem;
+}
+
+.categorySub {
+  font-size: 1.0625rem;
+  color: var(--color-secondary-400);
+  margin-top: 0.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.categoryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1.5rem;
+}
+
+.catCard {
+  position: relative;
+  display: block;
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  background: var(--color-tertiary-200);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.catCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.catImgWrap {
+  width: 100%;
+  height: 100%;
+}
+
+.catImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 700ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.catCard:hover .catImg {
+  transform: scale(1.08);
+}
+
+.catOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10, 10, 10, 0.65) 0%, rgba(10, 10, 10, 0) 50%);
+  z-index: 1;
+}
+
+.catName {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  right: 1.25rem;
+  z-index: 2;
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 600;
   color: var(--color-tertiary-50);
-  border-color: var(--brand-black);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
 }
 
 /* ─── Sections ───────────────────────────────────────────────────────────── */
@@ -192,7 +238,6 @@
 }
 
 /* Blog skeleton */
-.blogSkeleton {}
 .blogSkThumb {
   width: 100%;
   aspect-ratio: 16 / 9;

@@ -33,6 +33,26 @@ export function getImageUrl(path) {
   return `${IMAGE_BASE_URL}${path}`
 }
 
+const FALLBACK_BLOG_IMAGES = [
+  'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&q=80&w=800',
+  'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800',
+  'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&q=80&w=800',
+  'https://images.unsplash.com/photo-1512418490979-9ce792d5be30?auto=format&fit=crop&q=80&w=800',
+  'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=800',
+  'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=800'
+]
+
+/**
+ * Returns a beautiful fallback image for blogs if the API returns a base64 SVG.
+ */
+export function getBlogImage(id, originalUrl) {
+  if (!originalUrl || originalUrl.startsWith('data:image/svg')) {
+    const num = parseInt(String(id).replace(/\D/g, ''), 10) || 0
+    return FALLBACK_BLOG_IMAGES[num % FALLBACK_BLOG_IMAGES.length]
+  }
+  return originalUrl
+}
+
 /**
  * Truncate text to a max length, appending ellipsis.
  * @param {string} text
