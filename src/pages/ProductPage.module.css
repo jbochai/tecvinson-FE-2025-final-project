@@ -22,18 +22,20 @@
   position: sticky;
   top: calc(var(--nav-height) + 2rem);
   overflow: hidden;
-  border-radius: 4px;
+  border-radius: 8px; /* Softer radius */
   background: var(--color-tertiary-200);
-  aspect-ratio: 1;
+  aspect-ratio: 3 / 4; /* More editorial ratio */
+  box-shadow: var(--shadow-md);
 }
 
 .productImg {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 500ms ease;
+  transition: transform 700ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  cursor: zoom-in;
 }
-.productImg:hover { transform: scale(1.03); }
+.productImg:hover { transform: scale(1.1); }
 
 /* ─── Info panel ─────────────────────────────────────────────────────────── */
 .infoPanel {
@@ -119,17 +121,22 @@
 }
 
 .colorSwatch {
-  width: 2rem;
-  height: 2rem;
+  width: 2.25rem;
+  height: 2.25rem;
   border-radius: 50%;
   border: 2px solid var(--color-tertiary-300);
   cursor: pointer;
-  transition: transform var(--transition-fast), border-color var(--transition-fast);
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
 }
-.colorSwatch:hover { transform: scale(1.15); }
+.colorSwatch:hover { 
+  transform: scale(1.1);
+  border-color: var(--color-tertiary-400); 
+}
 .swatchActive {
   border-color: var(--brand-black) !important;
-  box-shadow: 0 0 0 3px var(--color-tertiary-50), 0 0 0 5px var(--brand-black);
+  box-shadow: 0 0 0 2px var(--color-tertiary-50), 0 0 0 4px var(--brand-black);
+  transform: scale(1.05);
 }
 
 /* Size buttons */
@@ -141,12 +148,12 @@
 
 .sizeBtn {
   position: relative;
-  min-width: 2.75rem;
-  height: 2.75rem;
+  min-width: 3.5rem;
+  height: 3rem;
   padding-inline: 0.75rem;
-  border: 1.5px solid var(--color-tertiary-400);
-  border-radius: 2px;
-  font-size: 0.8125rem;
+  border: 1px solid var(--color-tertiary-400);
+  border-radius: 4px;
+  font-size: 0.875rem;
   font-weight: 500;
   color: var(--brand-black);
   background: var(--color-tertiary-50);
@@ -154,28 +161,29 @@
   transition: all var(--transition-fast);
 }
 .sizeBtn:hover:not(:disabled) {
-  border-color: var(--brand-black);
+  border-color: var(--brand-gold);
   background: var(--color-tertiary-200);
 }
 .sizeActive {
   background: var(--brand-black) !important;
-  color: var(--color-tertiary-50) !important;
+  color: var(--brand-gold) !important;
   border-color: var(--brand-black) !important;
+  box-shadow: var(--shadow-sm);
 }
 .sizeOut {
-  opacity: 0.45;
+  opacity: 0.4;
   cursor: not-allowed;
-  text-decoration: line-through;
+  background: var(--color-tertiary-100);
+  color: var(--color-secondary-400);
 }
 .sizeOutLabel {
   position: absolute;
-  bottom: 2px;
-  right: 3px;
-  font-size: 0.5rem;
-  color: var(--color-error-600);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  text-decoration: none;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--color-neutral-400);
+  transform: rotate(-30deg);
 }
 
 /* Qty */
@@ -237,9 +245,25 @@
 .addBtn {
   width: 100%;
   justify-content: center;
-  padding-block: 0.875rem;
-  font-size: 0.9375rem;
-  margin-top: 0.5rem;
+  padding-block: 1rem;
+  font-size: 1rem;
+  margin-top: 1rem;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .addBtn {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    margin-top: 0;
+    border-radius: 0;
+    padding-bottom: env(safe-area-inset-bottom, 1rem);
+    padding-top: 1rem;
+    z-index: 50;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
+  }
 }
 
 /* ─── Related ────────────────────────────────────────────────────────────── */

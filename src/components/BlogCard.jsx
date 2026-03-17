@@ -1,16 +1,18 @@
 import { Link } from 'react-router-dom'
 import { Calendar, Eye, Heart } from 'lucide-react'
-import { formatDate, truncate } from '../utils/constants'
+import { formatDate, truncate, getBlogImage } from '../utils/constants'
 import styles from './BlogCard.module.css'
 
 export default function BlogCard({ post }) {
   const { id, title, author, publishedAt, content, thumbnail, meta } = post
 
+  const displayThumb = getBlogImage(id, thumbnail)
+
   return (
     <article className={`card ${styles.card}`}>
-      {thumbnail && (
+      {displayThumb && (
         <Link to={`/blog/${id}`} className={styles.thumbLink}>
-          <img src={thumbnail} alt={title} className={styles.thumb} />
+          <img src={displayThumb} alt={title} className={styles.thumb} />
         </Link>
       )}
 

@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom'
 import { ChevronLeft, ShoppingBag, Package, Tag, AlertCircle } from 'lucide-react'
 import { useFetch } from '../hooks/useFetch'
 import { useCart } from '../context/CartContext'
+import { useToast } from '../context/ToastContext'
 import { API_BASE_URL, getImageUrl, formatPrice } from '../utils/constants'
 import StarRating from '../components/StarRating'
 import ProductCard from '../components/ProductCard'
@@ -14,6 +15,7 @@ export default function ProductPage() {
   const { id } = useParams()
   const navigate = useNavigate()
   const { addItem } = useCart()
+  const { addToast } = useToast()
 
   const { data: product, loading, error } = useFetch(`${API_BASE_URL}/products/${id}`)
   const { data: allProducts } = useFetch(`${API_BASE_URL}/products`)
@@ -22,8 +24,6 @@ export default function ProductPage() {
   const [selectedSize,  setSelectedSize]  = useState('')
   const [qty,           setQty]           = useState(1)
   const [imgError,      setImgError]      = useState(false)
-  const [addMsg,        setAddMsg]        = useState('')
-  const [warning,       setWarning]       = useState('')
 
   // Derive the selected variant and its sizes
   const variants = product?.meta?.variants ?? []
@@ -50,26 +50,23 @@ export default function ProductPage() {
     setSelectedColor(color)
     setSelectedSize('')
     setQty(1)
-    setWarning('')
   }
 
   function handleAddToCart() {
     if (!selectedColor) {
-      setWarning('Please select a colour.')
+      addToast('Please select a colour.', 'error')
       return
     }
     if (!selectedSize) {
-      setWarning('Please select a size.')
+      addToast('Please select a size.', 'error')
       return
     }
     if (stockForSelection === 0) {
-      setWarning('This variant is out of stock.')
+      addToast('This variant is out of stock.', 'error')
       return
     }
-    setWarning('')
     addItem(product, selectedColor, selectedSizeObj, qty)
-    setAddMsg('Added to cart!')
-    setTimeout(() => setAddMsg(''), 2500)
+    addToast(`${product.name} added to bag!`, 'success')
   }
 
   // ─── States ────────────────────────────────────────────────────────────
@@ -96,7 +93,7 @@ export default function ProductPage() {
           {/* Image */}
           <div className={styles.imagePanel}>
             <img
-              src={imgError ? 'https://placehold.co/600x500/e4ddd3/96763a?text=No+Image' : getImageUrl(image)}
+              src={imgError ? 'https://placehold.co/600x800/e4ddd3/96763a?text=No+Image' : getImageUrl(image)}
               alt={name}
               className={styles.productImg}
               onError={() => setImgError(true)}
@@ -172,13 +169,13 @@ export default function ProductPage() {
                     <button
                       key={s.sku}
                       className={`${styles.sizeBtn} ${selectedSize === s.size ? styles.sizeActive : ''} ${s.stock === 0 ? styles.sizeOut : ''}`}
-                      onClick={() => { if (s.stock > 0) { setSelectedSize(s.size); setQty(1); setWarning('') } }}
+                      onClick={() => { if (s.stock > 0) { setSelectedSize(s.size); setQty(1); } }}
                       disabled={s.stock === 0}
                       aria-pressed={selectedSize === s.size}
                       title={s.stock === 0 ? 'Out of stock' : `${s.stock} left`}
                     >
                       {s.size}
-                      {s.stock === 0 && <span className={styles.sizeOutLabel}>Out</span>}
+                      {s.stock === 0 && <span className={styles.sizeOutLabel} aria-hidden="true" />}
                     </button>
                   ))}
                 </div>
@@ -206,15 +203,6 @@ export default function ProductPage() {
               </div>
             )}
 
-            {/* ─── Warning / success ─────────────────────────────────── */}
-            {warning && (
-              <p className={styles.warning} role="alert">
-                <AlertCircle size={14} /> {warning}
-              </p>
-            )}
-            {addMsg && (
-              <p className={styles.success} role="status">{addMsg}</p>
-            )}
 
             {/* ─── Add to cart button ────────────────────────────────── */}
             <button

@@ -1,7 +1,7 @@
 import { useParams, Link } from 'react-router-dom'
 import { ArrowLeft, Calendar, Eye, Heart, MessageCircle, Tag } from 'lucide-react'
 import { useFetch } from '../hooks/useFetch'
-import { API_BASE_URL, formatDate } from '../utils/constants'
+import { API_BASE_URL, formatDate, getBlogImage } from '../utils/constants'
 import Spinner from '../components/Spinner'
 import ErrorMessage from '../components/ErrorMessage'
 import styles from './PostPage.module.css'
@@ -33,6 +33,8 @@ export default function PostPage() {
 
   const { title, author, publishedAt, content, thumbnail, meta } = post
   const comments = meta?.comments ?? []
+  
+  const displayThumb = getBlogImage(id, thumbnail)
 
   return (
     <div className="page">
@@ -85,9 +87,9 @@ export default function PostPage() {
           </header>
 
           {/* Thumbnail */}
-          {thumbnail && (
+          {displayThumb && (
             <div className={styles.thumbWrap}>
-              <img src={thumbnail} alt={title} className={styles.thumb} />
+              <img src={displayThumb} alt={title} className={styles.thumb} />
             </div>
           )}
 
