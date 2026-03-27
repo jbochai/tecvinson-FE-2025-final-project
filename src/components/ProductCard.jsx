@@ -5,7 +5,7 @@ import { getImageUrl, formatPrice } from '../utils/constants'
 import styles from './ProductCard.module.css'
 
 export default function ProductCard({ product }) {
-  const { id, name, price, category, image, meta } = product
+  const { id, title, price, category, thumbnail, rating, stock } = product
 
   function handleImgError(e) {
     e.target.src = 'https://placehold.co/400x300/e4ddd3/96763a?text=No+Image'
@@ -15,13 +15,13 @@ export default function ProductCard({ product }) {
     <article className={`card ${styles.card}`}>
       <Link to={`/shop/${id}`} className={styles.imageLink}>
         <img
-          src={getImageUrl(image)}
-          alt={name}
+          src={thumbnail}
+          alt={title}
           className={styles.image}
           loading="lazy"
           onError={handleImgError}
         />
-        {meta?.total_stock === 0 && (
+        {stock === 0 && (
           <span className={styles.outOfStock}>Out of Stock</span>
         )}
       </Link>
@@ -32,12 +32,12 @@ export default function ProductCard({ product }) {
         )}
 
         <Link to={`/shop/${id}`}>
-          <h3 className={styles.name}>{name}</h3>
+          <h3 className={styles.name}>{title}</h3>
         </Link>
 
         <div className={styles.meta}>
-          {meta?.rating != null && (
-            <StarRating rating={meta.rating} showValue />
+          {rating != null && (
+            <StarRating rating={rating} showValue />
           )}
         </div>
 

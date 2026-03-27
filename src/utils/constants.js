@@ -1,6 +1,7 @@
 // ─── API ─────────────────────────────────────────────────────────────────────
-export const API_BASE_URL = 'https://developerapis.vercel.app/api'
-export const IMAGE_BASE_URL = 'https://developerapis.vercel.app'
+export const API_BASE_URL = 'https://dummyjson.com'
+// DummyJSON images are absolute; we'll keep this as a fallback if needed
+export const IMAGE_BASE_URL = 'https://dummyjson.com'
 
 // ─── Cart ────────────────────────────────────────────────────────────────────
 export const FREE_SHIPPING_THRESHOLD = 50000   // ₦ amount for free shipping
@@ -100,7 +101,7 @@ export function sortProducts(products, sort) {
     case 'price-desc':
       return copy.sort((a, b) => Number(b.price) - Number(a.price))
     case 'rating':
-      return copy.sort((a, b) => (b.meta?.rating ?? 0) - (a.meta?.rating ?? 0))
+      return copy.sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0))
     default:
       return copy
   }

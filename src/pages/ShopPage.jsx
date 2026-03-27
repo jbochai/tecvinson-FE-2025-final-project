@@ -15,7 +15,8 @@ export default function ShopPage() {
   const activeSearch   = searchParams.get('q')   || ''
   const activeSort     = searchParams.get('sort') || 'default'
 
-  const { data: products, loading, error } = useFetch(`${API_BASE_URL}/products`)
+  const { data: pData, loading, error } = useFetch(`${API_BASE_URL}/products?limit=100`)
+  const products = pData?.products ?? []
 
   // Derive unique category list once
   const categories = useMemo(() => {
@@ -37,7 +38,7 @@ export default function ShopPage() {
       const q = activeSearch.toLowerCase()
       result = result.filter(
         p =>
-          p.name?.toLowerCase().includes(q) ||
+          p.title?.toLowerCase().includes(q) ||
           p.description?.toLowerCase().includes(q)
       )
     }

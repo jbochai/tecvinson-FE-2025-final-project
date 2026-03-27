@@ -43,7 +43,7 @@ export default function CartDrawer({ isOpen, onClose }) {
         {items.map((item) => (
           <li key={item.cartId} className={styles.item}>
             <div className={styles.itemImageWrap}>
-              <img src={getImageUrl(item.image)} alt={item.name} className={styles.itemImage} />
+              <img src={item.image} alt={item.name} className={styles.itemImage} />
             </div>
             
             <div className={styles.itemDetails}>
@@ -58,10 +58,6 @@ export default function CartDrawer({ isOpen, onClose }) {
                 >
                   <X size={16} />
                 </button>
-              </div>
-
-              <div className={styles.itemVariant}>
-                {item.color} / {item.size}
               </div>
               
               <div className={styles.itemFooter}>

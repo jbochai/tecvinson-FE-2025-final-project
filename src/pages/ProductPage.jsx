@@ -18,25 +18,11 @@ export default function ProductPage() {
   const { addToast } = useToast()
 
   const { data: product, loading, error } = useFetch(`${API_BASE_URL}/products/${id}`)
-  const { data: allProducts } = useFetch(`${API_BASE_URL}/products`)
+  const { data: pData } = useFetch(`${API_BASE_URL}/products?limit=100`)
+  const allProducts = pData?.products ?? []
 
-  const [selectedColor, setSelectedColor] = useState('')
-  const [selectedSize,  setSelectedSize]  = useState('')
   const [qty,           setQty]           = useState(1)
   const [imgError,      setImgError]      = useState(false)
-
-  // Derive the selected variant and its sizes
-  const variants = product?.meta?.variants ?? []
-  const selectedVariant = useMemo(
-    () => variants.find(v => v.color === selectedColor) ?? null,
-    [variants, selectedColor]
-  )
-  const availableSizes = selectedVariant?.sizes ?? []
-  const selectedSizeObj = useMemo(
-    () => availableSizes.find(s => s.size === selectedSize) ?? null,
-    [availableSizes, selectedSize]
-  )
-  const stockForSelection = selectedSizeObj?.stock ?? 0
 
   // Related: same category, exclude current
   const related = useMemo(() => {
@@ -46,27 +32,9 @@ export default function ProductPage() {
       .slice(0, 4)
   }, [allProducts, product])
 
-  function handleColorChange(color) {
-    setSelectedColor(color)
-    setSelectedSize('')
-    setQty(1)
-  }
-
   function handleAddToCart() {
-    if (!selectedColor) {
-      addToast('Please select a colour.', 'error')
-      return
-    }
-    if (!selectedSize) {
-      addToast('Please select a size.', 'error')
-      return
-    }
-    if (stockForSelection === 0) {
-      addToast('This variant is out of stock.', 'error')
-      return
-    }
-    addItem(product, selectedColor, selectedSizeObj, qty)
-    addToast(`${product.name} added to bag!`, 'success')
+    addItem(product, qty)
+    addToast(`${product.title} added to bag!`, 'success')
   }
 
   // ─── States ────────────────────────────────────────────────────────────
@@ -78,7 +46,7 @@ export default function ProductPage() {
   )
   if (!product) return null
 
-  const { name, price, description, category, image, meta } = product
+  const { title, price, description, category, thumbnail, rating, brand, stock } = product
 
   return (
     <div className="page">
@@ -93,8 +61,8 @@ export default function ProductPage() {
           {/* Image */}
           <div className={styles.imagePanel}>
             <img
-              src={imgError ? 'https://placehold.co/600x800/e4ddd3/96763a?text=No+Image' : getImageUrl(image)}
-              alt={name}
+              src={imgError ? 'https://placehold.co/600x800/e4ddd3/96763a?text=No+Image' : thumbnail}
+              alt={title}
               className={styles.productImg}
               onError={() => setImgError(true)}
             />
@@ -108,11 +76,11 @@ export default function ProductPage() {
               </Link>
             )}
 
-            <h1 className={styles.name}>{name}</h1>
+            <h1 className={styles.name}>{title}</h1>
 
             <div className={styles.ratingRow}>
-              {meta?.rating != null && (
-                <StarRating rating={meta.rating} showValue />
+              {rating != null && (
+                <StarRating rating={rating} showValue />
               )}
             </div>
 
@@ -122,68 +90,19 @@ export default function ProductPage() {
 
             {/* Meta */}
             <div className={styles.metaRow}>
-              {meta?.brand && (
+              {brand && (
                 <span className={styles.metaItem}>
-                  <Tag size={13} /> <strong>Brand:</strong> {meta.brand}
+                  <Tag size={13} /> <strong>Brand:</strong> {brand}
                 </span>
               )}
               <span className={styles.metaItem}>
                 <Package size={13} />
-                <strong>Stock:</strong>{' '}
-                {selectedSizeObj
-                  ? `${stockForSelection} units`
-                  : `${meta?.total_stock ?? 0} total`}
+                <strong>Stock:</strong> {stock} units
               </span>
             </div>
 
-            {/* ─── Colour selector ───────────────────────────────────── */}
-            {variants.length > 0 && (
-              <div className={styles.selectorGroup}>
-                <p className={styles.selectorLabel}>
-                  Colour{selectedColor && <em>: {selectedColor}</em>}
-                </p>
-                <div className={styles.colorRow}>
-                  {variants.map(v => (
-                    <button
-                      key={v.color}
-                      className={`${styles.colorSwatch} ${selectedColor === v.color ? styles.swatchActive : ''}`}
-                      title={v.color}
-                      style={{ background: v.color.toLowerCase() }}
-                      onClick={() => handleColorChange(v.color)}
-                      aria-pressed={selectedColor === v.color}
-                      aria-label={v.color}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* ─── Size selector (only after colour chosen) ──────────── */}
-            {selectedColor && availableSizes.length > 0 && (
-              <div className={styles.selectorGroup}>
-                <p className={styles.selectorLabel}>
-                  Size{selectedSize && <em>: {selectedSize}</em>}
-                </p>
-                <div className={styles.sizeRow}>
-                  {availableSizes.map(s => (
-                    <button
-                      key={s.sku}
-                      className={`${styles.sizeBtn} ${selectedSize === s.size ? styles.sizeActive : ''} ${s.stock === 0 ? styles.sizeOut : ''}`}
-                      onClick={() => { if (s.stock > 0) { setSelectedSize(s.size); setQty(1); } }}
-                      disabled={s.stock === 0}
-                      aria-pressed={selectedSize === s.size}
-                      title={s.stock === 0 ? 'Out of stock' : `${s.stock} left`}
-                    >
-                      {s.size}
-                      {s.stock === 0 && <span className={styles.sizeOutLabel} aria-hidden="true" />}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
             {/* ─── Quantity ──────────────────────────────────────────── */}
-            {selectedSizeObj && stockForSelection > 0 && (
+            {stock > 0 && (
               <div className={styles.selectorGroup}>
                 <p className={styles.selectorLabel}>Quantity</p>
                 <div className={styles.qtyRow}>
@@ -195,10 +114,10 @@ export default function ProductPage() {
                   <span className={styles.qtyVal}>{qty}</span>
                   <button
                     className={styles.qtyBtn}
-                    onClick={() => setQty(q => Math.min(stockForSelection, q + 1))}
+                    onClick={() => setQty(q => Math.min(stock, q + 1))}
                     aria-label="Increase quantity"
                   >+</button>
-                  <span className={styles.qtyMax}>{stockForSelection} available</span>
+                  <span className={styles.qtyMax}>{stock} available</span>
                 </div>
               </div>
             )}
@@ -208,10 +127,10 @@ export default function ProductPage() {
             <button
               className={`btn btn-primary ${styles.addBtn}`}
               onClick={handleAddToCart}
-              disabled={meta?.total_stock === 0}
+              disabled={stock === 0}
             >
               <ShoppingBag size={17} />
-              {meta?.total_stock === 0 ? 'Out of Stock' : 'Add to Cart'}
+              {stock === 0 ? 'Out of Stock' : 'Add to Cart'}
             </button>
           </div>
         </div>

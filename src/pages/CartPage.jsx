@@ -68,7 +68,7 @@ export default function CartPage() {
                   {/* Image */}
                   <Link to={`/shop/${item.productId}`} className={styles.itemImgWrap}>
                     <img
-                      src={getImageUrl(item.image)}
+                      src={item.image}
                       alt={item.name}
                       className={styles.itemImg}
                       onError={e => { e.target.src = 'https://placehold.co/100x100/e4ddd3/96763a?text=?' }}
@@ -80,9 +80,6 @@ export default function CartPage() {
                     <Link to={`/shop/${item.productId}`} className={styles.itemName}>
                       {item.name}
                     </Link>
-                    <p className={styles.itemVariant}>
-                      {item.color} · {item.size}
-                    </p>
                     <p className={styles.itemPrice}>{formatPrice(item.price)}</p>
                   </div>
 
