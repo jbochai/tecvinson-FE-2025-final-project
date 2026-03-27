@@ -10,22 +10,26 @@ import ErrorMessage from '../components/ErrorMessage'
 import styles from './HomePage.module.css'
 
 export default function HomePage() {
-  const { data: products, loading: pLoad, error: pErr } = useFetch(`${API_BASE_URL}/products`)
-  const { data: blogs,    loading: bLoad, error: bErr } = useFetch(`${API_BASE_URL}/blogs`)
+  const { data: pData, loading: pLoad, error: pErr } = useFetch(`${API_BASE_URL}/products?limit=100`)
+  const { data: bData,    loading: bLoad, error: bErr } = useFetch(`${API_BASE_URL}/posts?limit=30`)
+
+  const products = pData?.products
+  const blogs = bData?.posts
 
   // Show 4 featured products (first 4 with highest rating)
   const featured = useMemo(() => {
     if (!products) return []
     return [...products]
-      .sort((a, b) => (b.meta?.rating ?? 0) - (a.meta?.rating ?? 0))
+      .sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0))
       .slice(0, 4)
   }, [products])
 
   // Show latest 3 blog posts
   const latestPosts = useMemo(() => {
     if (!blogs) return []
+    // DummyJSON posts don't have dates, just take the first 3 or sort by ID
     return [...blogs]
-      .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
+      .sort((a, b) => b.id - a.id)
       .slice(0, 3)
   }, [blogs])
 

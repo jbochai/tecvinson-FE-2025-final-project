@@ -8,7 +8,8 @@ import ErrorMessage from '../components/ErrorMessage'
 import styles from './BlogPage.module.css'
 
 export default function BlogPage() {
-  const { data: posts, loading, error } = useFetch(`${API_BASE_URL}/blogs`)
+  const { data: pData, loading, error } = useFetch(`${API_BASE_URL}/posts?limit=30`)
+  const posts = pData?.posts ?? []
   const [search, setSearch] = useState('')
 
   const filtered = useMemo(() => {
@@ -18,8 +19,8 @@ export default function BlogPage() {
     return posts.filter(
       p =>
         p.title?.toLowerCase().includes(q) ||
-        p.author?.toLowerCase().includes(q) ||
-        p.meta?.tags?.some(t => t.toLowerCase().includes(q))
+        p.body?.toLowerCase().includes(q) ||
+        p.tags?.some(t => t.toLowerCase().includes(q))
     )
   }, [posts, search])
 

@@ -15,15 +15,12 @@ export function CartProvider({ children }) {
 
   /**
    * Add a product to the cart.
-   * Coerces price to a number HERE, at the boundary (see README best-practices).
    *
    * @param {object} product   – full product object from the API
-   * @param {string} color     – selected colour name
-   * @param {object} sizeObj   – { size, sku, stock } from the selected variant
    * @param {number} qty
    */
-  const addItem = useCallback((product, color, sizeObj, qty) => {
-    const cartId = buildCartId(product.id, sizeObj.sku)
+  const addItem = useCallback((product, qty) => {
+    const cartId = product.id
 
     setItems(prev => {
       const existing = prev.find(i => i.cartId === cartId)
@@ -31,7 +28,7 @@ export function CartProvider({ children }) {
         // Increase quantity up to the available stock ceiling
         return prev.map(i =>
           i.cartId === cartId
-            ? { ...i, qty: Math.min(i.qty + qty, sizeObj.stock) }
+            ? { ...i, qty: Math.min(i.qty + qty, product.stock) }
             : i
         )
       }
@@ -40,14 +37,11 @@ export function CartProvider({ children }) {
         {
           cartId,
           productId:  product.id,
-          name:       product.name,
-          image:      product.image,
+          name:       product.title,
+          image:      product.thumbnail,
           category:   product.category,
           price:      Number(product.price),   // ← coerce at the boundary
-          color,
-          size:       sizeObj.size,
-          sku:        sizeObj.sku,
-          maxStock:   sizeObj.stock,
+          maxStock:   product.stock,
           qty,
         },
       ]
